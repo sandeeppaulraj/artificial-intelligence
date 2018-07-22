@@ -37,7 +37,9 @@ class ActionLayer(BaseActionLayer):
         layers.ActionNode
         """
         # TODO: implement this function
-        raise NotImplementedError
+        l1 = [~a in actionA.preconditions for a in actionB.effects]
+        l2 = [~b in actionB.preconditions for b in actionA.effects]
+        return any(l1) or any(l2)
 
     def _competing_needs(self, actionA, actionB):
         """ Return True if any preconditions of the two actions are pairwise mutex in the parent layer
