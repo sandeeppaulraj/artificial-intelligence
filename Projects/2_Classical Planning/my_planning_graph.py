@@ -80,7 +80,9 @@ class LiteralLayer(BaseLiteralLayer):
     def _negation(self, literalA, literalB):
         """ Return True if two literals are negations of each other """
         # TODO: implement this function
-        raise NotImplementedError
+        l1 = literalB == ~literalA
+        l2 = literalA == ~literalB
+        return l1 or l2r
 
 
 class PlanningGraph:
