@@ -216,7 +216,28 @@ class PlanningGraph:
         WARNING: you should expect long runtimes using this heuristic on complex problems
         """
         # TODO: implement setlevel heuristic
-        raise NotImplementedError
+        def seen(layer):
+            for l in self.goal:
+                if l not in layer:
+                    return False
+            return True
+
+        def mutex_prime(layer):
+            for a, b in combinations(self.goal, 2):
+                if layer.is_mutex(a, b):
+                    return False
+            return True
+        
+        level = 0
+        while not self._is_leveled:
+            layer = self.literal_layers[-1]
+            
+            if seen(layer) and mutex_prime(layer):
+                return level
+
+            self._extend()
+            level += 1
+        return -1
 
     ##############################################################################
     #                     DO NOT MODIFY CODE BELOW THIS LINE                     #
